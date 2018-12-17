@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>
+</head>
+<body>
+<div id="articles">
+    <h2> POST NEWS :</h2>
+    <button>REFRESH</button>
+</div>
+<script>
+
+   $("#articles button").click(function () {
+     $.ajax({
+                type: "GET",
+                url: "http://localhost:7001/Articles",
+            }).done(function (data) {
+                var title = document.createElement("li");
+                $("#articles ul").remove();
+                $("#articles").append($("<ul/>"));
+                var articles = JSON.parse(data);
+                articles.forEach(function (element) {
+                    var item=document.createElement('a')
+                    item.href=element['link']
+                    item.innerHTML=element['title']
+                    $("#articles ul").append($("<li/>").html(item));
+                });
+            });
+   });
+
+
+
+</script>
+</body>
+</html>
